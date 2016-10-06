@@ -1,13 +1,13 @@
 VERSION 1.0 CLASS
 BEGIN
-  MultiUse = -1 
+  MultiUse = -1  'True
 END
-
 Attribute VB_Name = "clsClients"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+
 Option Explicit
 
 Private colClients As Collection
@@ -35,7 +35,7 @@ Public Sub Remove(Index As Variant)
 End Sub
 
 Public Property Get Item(Index As Variant) As clsClientInfo
-    Attribute Item.VB_UserMemId = 0
+Attribute Item.VB_UserMemId = 0
     Set Item = colClients.Item(Index)
 End Property
 
@@ -47,7 +47,8 @@ Public Sub Clear()
     Set colClients = New Collection
 End Sub
 
-Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal vStatYear As Integer, ByVal vStatMonth As Integer, ByVal vBrand As String, ByVal cLastRow As Long)
+
+Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal vStatYear As Integer, ByVal vStatMonth As Integer, ByVal vBrand As String)
     Const cFirstRow = 4
   
     Dim f_i As Long, obj As clsClientInfo
@@ -114,7 +115,7 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal vStatYear As Integer, ByV
     
     For f_i = cFirstRow To myLib.GetLastRow
     
-        With wks
+        With ActiveSheet
             vTypeBusiness = myLib.GetTypeBusiness(vBrand)
             vDatabaseClientNum = .Cells(f_i, 1)
             vDatabaseClientAndBrandNum = vBrand & vDatabaseClientNum
@@ -210,10 +211,10 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal vStatYear As Integer, ByV
             .PartnerName = vPartnerCode
             .PartnerCode = vPartnerName
         End With
+        
         Me.Add obj
     Next
 End Sub
-
 
 
 

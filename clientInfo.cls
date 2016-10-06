@@ -1,6 +1,6 @@
 VERSION 1.0 CLASS
 BEGIN
-  MultiUse = -1 
+  MultiUse = -1  'True
 END
 Attribute VB_Name = "clsClientInfo"
 Attribute VB_GlobalNameSpace = False
