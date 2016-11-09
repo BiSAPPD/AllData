@@ -51,15 +51,15 @@ End Sub
 Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal cStatYear As Integer, ByVal cStatMonth As Integer, ByVal cBrand As String)
     Const cFirstRow = 4
   
-    Dim f_i As Long, obj As clsClientInfo, n as Long
+    Dim f_i As Long, end_f as Long, obj As clsClientInfo, n as Long
 
    
     Dim clv As clsClientInfoValue
     Set clv = New clsClientInfoValue
     
-    
+    end_f = myLib.GetLastRow
     For f_i = cFirstRow To myLib.GetLastRow
-    
+    Application.StatusBar = cBrand & " Year: " & cStatYear & " Month: " &  cStatMonth  &" Progress: " & f_i & " of " & end_f & ": " & Format(f_i / end_f, "0%"): DoEvents
         With clv
             .vTypeBusiness = myLib.GetTypeBusiness(cBrand)
             .vDatabaseClientNum = wks.Cells(f_i, 1)
@@ -123,81 +123,81 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal cStatYear As Integer, ByV
         n = 0
          With clc
             n = n + 1
-            .CA_TY_M1 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M1 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M1 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD1 = IIf(cStatMonth >= n, .CA_TY_M1, Empty)
+            .CA_TY_YTD1 = IIf(cStatMonth <= n, .CA_TY_M1, Empty)
             .CA_PY_YTD1 = IIf(cStatMonth >= 1, .CA_PY_M1, Empty)
 
             n = n + 1
-            .CA_TY_M2 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M2 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M2 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD2 = IIf(cStatMonth >= n, .CA_TY_YTD1 + .CA_TY_M2, Empty)
+            .CA_TY_YTD2 = IIf(cStatMonth <= n, .CA_TY_YTD1 + .CA_TY_M2, Empty)
             .CA_PY_YTD2 = IIf(cStatMonth >= 1, .CA_PY_YTD1 + .CA_PY_M2, Empty)
 
             n = n + 1
-            .CA_TY_M3 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M3 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M3 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD3 = IIf(cStatMonth >= n, .CA_TY_YTD2 + .CA_TY_M3, Empty)
+            .CA_TY_YTD3 = IIf(cStatMonth <= n, .CA_TY_YTD2 + .CA_TY_M3, Empty)
             .CA_PY_YTD3 = IIf(cStatMonth >= 1, .CA_PY_YTD2 + .CA_PY_M3, Empty)
             .CA_TY_Q1 = .CA_TY_YTD3
             .CA_PY_Q1 = .CA_PY_YTD3
 
             n = n + 1
-            .CA_TY_M4 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M4 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M4 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD4 = IIf(cStatMonth >= n, .CA_TY_YTD3 + .CA_TY_M4, Empty)
+            .CA_TY_YTD4 = IIf(cStatMonth <= n, .CA_TY_YTD3 + .CA_TY_M4, Empty)
             .CA_PY_YTD4 = IIf(cStatMonth >= 1, .CA_PY_YTD3 + .CA_PY_M4, Empty)
 
             n = n + 1
-            .CA_TY_M5 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M5 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M5 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD5 = IIf(cStatMonth >= n, .CA_TY_YTD4 + .CA_TY_M5, Empty)
+            .CA_TY_YTD5 = IIf(cStatMonth <= n, .CA_TY_YTD4 + .CA_TY_M5, Empty)
             .CA_PY_YTD5 = IIf(cStatMonth >= 1, .CA_PY_YTD4 + .CA_PY_M5, Empty)
 
             n = n + 1
-            .CA_TY_M6 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M6 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M6 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD6 = IIf(cStatMonth >= n, .CA_TY_YTD5 + .CA_TY_M6, Empty)
+            .CA_TY_YTD6 = IIf(cStatMonth <= n, .CA_TY_YTD5 + .CA_TY_M6, Empty)
             .CA_PY_YTD6 = IIf(cStatMonth >= 1, .CA_PY_YTD5 + .CA_PY_M6, Empty)
             .CA_TY_Q2 = .CA_TY_YTD6
             .CA_PY_Q2 = .CA_PY_YTD6
 
             n = n + 1
-            .CA_TY_M7 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M7 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M7 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD7 = IIf(cStatMonth >= n, .CA_TY_YTD6 + .CA_TY_M7, Empty)
+            .CA_TY_YTD7 = IIf(cStatMonth <= n, .CA_TY_YTD6 + .CA_TY_M7, Empty)
             .CA_PY_YTD7 = IIf(cStatMonth >= 1, .CA_PY_YTD6 + .CA_PY_M7, Empty)
 
             n = n + 1
-            .CA_TY_M8 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M8 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M8 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD8 = IIf(cStatMonth >= n, .CA_TY_YTD7 + .CA_TY_M8, Empty)
+            .CA_TY_YTD8 = IIf(cStatMonth <= n, .CA_TY_YTD7 + .CA_TY_M8, Empty)
             .CA_PY_YTD8 = IIf(cStatMonth >= 1, .CA_PY_YTD7 + .CA_PY_M8, Empty)
 
             n = n + 1
-            .CA_TY_M9 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M9 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M9 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD9 = IIf(cStatMonth >= n, .CA_TY_YTD8 + .CA_TY_M9, Empty)
+            .CA_TY_YTD9 = IIf(cStatMonth <= n, .CA_TY_YTD8 + .CA_TY_M9, Empty)
             .CA_PY_YTD9 = IIf(cStatMonth >= 1, .CA_PY_YTD8 + .CA_PY_M9, Empty)
             .CA_TY_Q3 = .CA_TY_YTD9
             .CA_PY_Q3 = .CA_PY_YTD9
 
             n = n + 1
-            .CA_TY_M10 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M10 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M10 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD10 = IIf(cStatMonth >= n, .CA_TY_YTD9 + .CA_TY_M10, Empty)
+            .CA_TY_YTD10 = IIf(cStatMonth <= n, .CA_TY_YTD9 + .CA_TY_M10, Empty)
             .CA_PY_YTD10 = IIf(cStatMonth >= 1, .CA_PY_YTD9 + .CA_PY_M10, Empty)
 
             n = n + 1
-            .CA_TY_M11 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M11 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M11 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD11 = IIf(cStatMonth >= n, .CA_TY_YTD10 + .CA_TY_M11, Empty)
+            .CA_TY_YTD11 = IIf(cStatMonth <= n, .CA_TY_YTD10 + .CA_TY_M11, Empty)
             .CA_PY_YTD11 = IIf(cStatMonth >= 1, .CA_PY_YTD10 + .CA_PY_M11, Empty)
 
             n = n + 1
-            .CA_TY_M12 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
+            .CA_TY_M12 = IIf(cStatMonth <= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M12 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
-            .CA_TY_YTD12 = IIf(cStatMonth >= n, .CA_TY_YTD11 + .CA_TY_M12, Empty)
+            .CA_TY_YTD12 = IIf(cStatMonth <= n, .CA_TY_YTD11 + .CA_TY_M12, Empty)
             .CA_PY_YTD12 = IIf(cStatMonth >= 1, .CA_PY_YTD11 + .CA_PY_M12, Empty)
             .CA_TY_Q4 = .CA_TY_YTD12
             .CA_PY_Q4 = .CA_PY_YTD12
