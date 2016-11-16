@@ -13,7 +13,7 @@ nm_ActWb = ActiveWorkbook.Name
 cd_ActualMonth = CInt(InputBox("Month"))
 ThisYear = CInt(InputBox("YearEnd"))
 
-ar_brand = Array("KR", "RD")
+ar_brand = Array("LP", "MX", "KR", "RD", "ES", "DE", "CR")
 myLib.VBA_Start
 
 Dim clnts As clsClients, clnt As clsClientInfo
@@ -66,7 +66,7 @@ For Each clnt In clnts
         n = n + 1: Cells(i + 1, n) = .GeoReg:                       If i = 1 Then Cells(1, n) = "GeoReg"
         n = n + 1: Cells(i + 1, n) = .ClientTypeRus:                If i = 1 Then Cells(1, n) = "ClientTypeRus"
         n = n + 1: Cells(i + 1, n) = .ClientTypeEng:                If i = 1 Then Cells(1, n) = "ClientTypeEng"
-        n = n + 1: Cells(i + 1, n) = .ClientTypeEngChort:           If i = 1 Then Cells(1, n) = "ClientTypeEngChort"
+        n = n + 1: Cells(i + 1, n) = .ClientTypeEngShort:           If i = 1 Then Cells(1, n) = "ClientTypeEngChort"
         n = n + 1: Cells(i + 1, n) = .ClientTypeEngChain:           If i = 1 Then Cells(1, n) = "ClientTypeEngChain"
         n = n + 1: Cells(i + 1, n) = .ClubStatus:                   If i = 1 Then Cells(1, n) = "ClubStatus"
         n = n + 1: Cells(i + 1, n) = .EmotionStatus:                If i = 1 Then Cells(1, n) = "EmotionStatus"
@@ -162,5 +162,6 @@ Next
 myLib.VBA_End
 End Sub
     
+
 
 

@@ -53,76 +53,77 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal cStatYear As Integer, ByV
   
     Dim f_i As Long, end_f As Long, obj As clsClientInfo, n As Long
 
-   
-    Dim clv As clsClientInfoValue
-    Set clv = New clsClientInfoValue
+    
     
     end_f = myLib.GetLastRow
     For f_i = cFirstRow To myLib.GetLastRow
     Application.StatusBar = cBrand & " Year: " & cStatYear & " Month: " & cStatMonth & " Progress: " & f_i & " of " & end_f & ": " & Format(f_i / end_f, "0%"): DoEvents
-        With clv
-            .vTypeBusiness = myLib.GetTypeBusiness(cBrand)
-            .vDatabaseClientNum = wks.Cells(f_i, 1)
-            .vDatabaseClientAndBrandNum = cBrand & .vDatabaseClientNum
-            .vUniverseCode = myLib.getUniversCode(cBrand, f_i, wks.Cells(f_i, 2))
-            .vMregName = myLib.fixError(wks.Cells(f_i, 4))
-            .vRegName = myLib.fixError(wks.Cells(f_i, 5))
-            .vExtMregName = myLib.GetMregExt(.vMregName, .vRegName)
-            .vFlsmName = myLib.fixError(wks.Cells(f_i, 165))
-            .vSecName = myLib.fixError(wks.Cells(f_i, 6))
-            .vSrepName = myLib.fixError(wks.Cells(f_i, 7))
-            .vClient = wks.Cells(f_i, 9)
-            .vClientAddres = wks.Cells(f_i, 12)
-            .vGeoCity = wks.Cells(f_i, 11)
-            .vClientName = myLib.GetClientName(.vClient, .vClientAddres, .vGeoCity)
-            .vChainName = wks.Cells(f_i, 19)
-            .vChainCode = myLib.GetNum2numNull(IIf(Left(Cells(f_i, 20), 2) = "93", Cells(f_i, 20), 0))
-            .vGeoReg = wks.Cells(f_i, 13)
-            .vClientType = wks.Cells(f_i, 18)
-            .vClientTypeRus = myLib.GetClntType(.vClientType, 1)
-            .vClientTypeEng = myLib.GetClntType(.vClientType, 2)
-            .vClientTypeEngChort = myLib.GetClntType(.vClientType, 3)
-            .vClientTypeEngChain = myLib.GetClntType(.vClientType, 4)
-            .vCnqYearDate = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 1)
-            .vCnqYearGA = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 3)
-            .vCnqMonthNameRus = wks.Cells(f_i, 64)
-            .vCnqMonthNum = myLib.GetMonthNumeric(.vCnqMonthNameRus)
-            .vCnqMonthNameEng = myLib.GetNameMonthEN(.vCnqMonthNum)
-            .vChainNameTop = ""
-            .vCnqFullDate = DateSerial(.vCnqYearDate, .vCnqMonthNum, 1)
-            .vMagMinPrice = myLib.GetNum2num0(wks.Cells(f_i, 23))
-            .vMagMaxPrice = myLib.GetNum2num0(wks.Cells(f_i, 25))
-            .vHairDressersPlaces = myLib.GetNum2num0(wks.Cells(f_i, 27))
-            .vMagTypePrice = myLib.GetMag(.vMagMinPrice, .vMagMaxPrice, .vHairDressersPlaces, .vTypeBusiness)
-            .vMagTypePlace = myLib.GetMag(.vMagMinPrice, .vMagMaxPrice, .vHairDressersPlaces, "place")
-            .vMag = .vMagTypePrice & .vMagTypePlace
-            .vMagType = IIf(Len(.vMag) = 2, .vMag, Empty)
-            .vWorkStatusNum = wks.Cells(f_i, 8)
-            .vWorkStatusName = myLib.GetTypeDN(.vWorkStatusNum)
-            .vClientEcadCode = wks.Cells(f_i, 29)
-            .vHairDressers = myLib.GetNum2num0(wks.Cells(f_i, 28))
-            .vPartnerCode = wks.Cells(f_i, 173)
-            .vPartnerName = wks.Cells(f_i, 167)
-            .vClubStatus = wks.Cells(f_i, 40)
-            .vEmotionStatus = Empty
-            .vClientTypeGA = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 2)
-            .vLtmAvgCaVal = myLib.GetLTM(wks, f_i, cStatMonth, "avg_ca")
-            .vLtmAvgCaName = myLib.GetLTM(wks, f_i, cStatMonth, "type_avg_ca")
-            .vLtmFrqOrders = myLib.GetLTM(wks, f_i, cStatMonth, "frqOrders")
-            .vClientEvVal = myLib.GetNum2num0(wks.Cells(f_i, 92))
-            .vClientEvName = myLib.GetVectoreEV(.vClientEvVal)
-            .vMastersEducatedAllY = myLib.GetNum2numNull(wks.Cells(f_i, 30))
-            .vMastersEducatedPY = myLib.GetNum2numNull(wks.Cells(f_i, 31))
-            .vMastersEducatedTY = myLib.GetNum2numNull(wks.Cells(f_i, 32))
-        End With
 
-        Dim clc As clsClientCAValue
-        Set clc = New clsClientCAValue
-        Const clmTYLor = 93, clmPYLor = 106
 
-        n = 0
-         With clc
-            n = n + 1
+
+        Set obj = New clsClientInfo
+        With obj
+            .StatYear = cStatYear
+            .StatMonth = cStatMonth
+            .BrandName = cBrand
+            .TypeBusiness = myLib.GetTypeBusiness(cBrand)
+            .DatabaseClientNum = wks.Cells(f_i, 1)
+            .DatabaseClientAndBrandNum = cBrand & .DatabaseClientNum
+            .UniverseCode = myLib.getUniversCode(cBrand, f_i, wks.Cells(f_i, 2))
+            .UniversCodeAndBrand = cBrand & .UniverseCode
+            .MregName = myLib.fixError(wks.Cells(f_i, 4))
+            .RegName = myLib.fixError(wks.Cells(f_i, 5))
+            .ExtMregName = myLib.GetMregExt(.MregName, .RegName)
+            .FlsmName = myLib.fixError(wks.Cells(f_i, 165))
+            .SecName = myLib.fixError(wks.Cells(f_i, 6))
+            .SrepName = myLib.fixError(wks.Cells(f_i, 7))
+            .Client = wks.Cells(f_i, 9)
+            .ClientAddres = wks.Cells(f_i, 12)
+            .GeoCity = wks.Cells(f_i, 11)
+            .ClientName = myLib.GetClientName(.Client, .ClientAddres, .GeoCity)
+            .ChainName = wks.Cells(f_i, 19)
+            .ChainCode = myLib.GetNum2numNull(Cells(f_i, 20))
+            .ChainNameTop = IIf(Left(.ChainCode, 2) = "93", .ChainName, Empty)
+            .GeoReg = wks.Cells(f_i, 13)
+            .ClientType = wks.Cells(f_i, 18)
+            .ClientTypeRus = myLib.GetClntType(.ClientType, 1)
+            .ClientTypeEng = myLib.GetClntType(.ClientType, 2)
+            .ClientTypeEngShort = myLib.GetClntType(.ClientType, 3)
+            .ClientTypeEngChain = myLib.GetClntType(.ClientType, 4)
+            .ClientTypeGA = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 2)
+            .ClubStatus = wks.Cells(f_i, 40)
+            .EmotionStatus = Empty
+            .CnqYearDate = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 1)
+            .CnqYearGA = myLib.GetYearType(cStatYear, myLib.GetNum2num0(wks.Cells(f_i, 65)), 3)
+            .CnqFullDate = DateSerial(.CnqYearDate, .CnqMonthNum, 1)
+            .CnqMonthNameRus = wks.Cells(f_i, 64)
+            .CnqMonthNum = myLib.GetMonthNumeric(.CnqMonthNameRus)
+            .CnqMonthNameEng = myLib.GetNameMonthEN(.CnqMonthNum)
+            .MagMinPrice = myLib.GetNum2num0(wks.Cells(f_i, 23))
+            .MagMaxPrice = myLib.GetNum2num0(wks.Cells(f_i, 25))
+            .HairDressersPlaces = myLib.GetNum2num0(wks.Cells(f_i, 27))
+            .MagTypePrice = myLib.GetMag(.MagMinPrice, .MagMaxPrice, .HairDressersPlaces, .TypeBusiness)
+            .MagTypePlace = myLib.GetMag(.MagMinPrice, .MagMaxPrice, .HairDressersPlaces, "place")
+            .Mag = .MagTypePrice & .MagTypePlace
+            .MagType = IIf(Len(.Mag) = 2, .Mag, Empty)
+            .WorkStatusNum = wks.Cells(f_i, 8)
+            .WorkStatusName = myLib.GetTypeDN(.WorkStatusNum)
+            .ClientEcadCode = wks.Cells(f_i, 29)
+            .HairDressers = myLib.GetNum2num0(wks.Cells(f_i, 28))
+            .PartnerCode = wks.Cells(f_i, 173)
+            .PartnerName = wks.Cells(f_i, 167)
+            .LtmAvgCaVal = myLib.GetLTM(wks, f_i, cStatMonth, "avg_ca")
+            .LtmAvgCaName = myLib.GetLTM(wks, f_i, cStatMonth, "type_avg_ca")
+            .LtmFrqOrders = myLib.GetLTM(wks, f_i, cStatMonth, "frqOrders")
+            .ClientEvVal = myLib.GetNum2num0(wks.Cells(f_i, 92))
+            .ClientEvName = myLib.GetVectoreEV(.ClientEvVal)
+            .MastersEducatedAllY = myLib.GetNum2numNull(wks.Cells(f_i, 30))
+            .MastersEducatedPY = myLib.GetNum2numNull(wks.Cells(f_i, 31))
+            .MastersEducatedTY = myLib.GetNum2numNull(wks.Cells(f_i, 32))
+
+           Const clmTYLor = 93, clmPYLor = 106
+
+            n = 1
             .CA_TY_M1 = IIf(cStatMonth >= n, myLib.GetNum2numNull(wks.Cells(f_i, clmTYLor + n - 1)), Empty)
             .CA_PY_M1 = IIf(cStatMonth >= 1, myLib.GetNum2numNull(wks.Cells(f_i, clmPYLor + n - 1)), Empty)
             .CA_TY_YTD1 = IIf(cStatMonth >= n, .CA_TY_M1, Empty)
@@ -201,125 +202,6 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal cStatYear As Integer, ByV
             .CA_PY_YTD12 = IIf(cStatMonth >= 1, .CA_PY_YTD11 + .CA_PY_M12, Empty)
             .CA_TY_Q4 = .CA_TY_YTD12
             .CA_PY_Q4 = .CA_PY_YTD12
-        End With
-
-
-        Set obj = New clsClientInfo
-        With obj
-            .StatYear = cStatYear
-            .StatMonth = cStatMonth
-            .BrandName = cBrand
-            .TypeBusiness = clv.vTypeBusiness
-            .DatabaseClientNum = clv.vDatabaseClientNum
-            .DatabaseClientAndBrandNum = clv.vDatabaseClientAndBrandNum
-            .UniverseCode = clv.vUniverseCode
-            .UniversCodeAndBrand = cBrand & clv.vUniverseCode
-            .MregName = clv.vMregName
-            .ExtMregName = clv.vExtMregName
-            .RegName = clv.vRegName
-            .FlsmName = clv.vFlsmName
-            .SecName = clv.vSecName
-            .SrepName = clv.vSrepName
-            .ClientName = clv.vClientName
-            .ChainName = clv.vChainName
-            .ChainName = clv.vChainName
-            .ChainCode = clv.vChainCode
-            .ChainNameTop = clv.vChainNameTop
-            .GeoCity = clv.vGeoCity
-            .GeoReg = clv.vGeoReg
-            .ClientTypeRus = clv.vClientTypeRus
-            .ClientTypeEng = clv.vClientTypeEng
-            .ClientTypeEngChort = clv.vClientTypeEngChort
-            .ClientTypeEngChain = clv.vClientTypeEngChain
-            .ClientTypeGA = clv.vClientTypeGA
-            .ClubStatus = clv.vClubStatus
-            .EmotionStatus = clv.vEmotionStatus
-            .CnqFullDate = clv.vCnqFullDate
-            .CnqYearDate = clv.vCnqYearDate
-            .CnqYearGA = clv.vCnqYearGA
-            .CnqMonthNum = clv.vCnqMonthNum
-            .CnqMonthNameRus = clv.vCnqMonthNameRus
-            .CnqMonthNameEng = clv.vCnqMonthNameEng
-            .MagType = clv.vMagType
-            .MagTypePrice = clv.vMagTypePrice
-            .MagTypePlace = clv.vMagTypePlace
-            .WorkStatusNum = clv.vWorkStatusNum
-            .WorkStatusName = clv.vWorkStatusName
-            .LtmAvgCaVal = clv.vLtmAvgCaVal
-            .LtmAvgCaName = clv.vLtmAvgCaName
-            .LtmFrqOrders = clv.vLtmFrqOrders
-            .ClientEvVal = clv.vClientEvVal
-            .ClientEvName = clv.vClientEvName
-            .ClientEcadCode = clv.vClientEcadCode
-            .MastersEducatedAllY = clv.vMastersEducatedAllY
-            .MastersEducatedPY = clv.vMastersEducatedPY
-            .MastersEducatedTY = clv.vMastersEducatedTY
-            .HairdressersNum = clv.vHairDressers
-            .HairdressersWorkPlace = clv.vHairDressersPlaces
-            .PartnerName = clv.vPartnerCode
-            .PartnerCode = clv.vPartnerName
-
-            .CA_TY_M1 = clc.CA_TY_M1
-            .CA_TY_M2 = clc.CA_TY_M2
-            .CA_TY_M3 = clc.CA_TY_M3
-            .CA_TY_M4 = clc.CA_TY_M4
-            .CA_TY_M5 = clc.CA_TY_M5
-            .CA_TY_M6 = clc.CA_TY_M6
-            .CA_TY_M7 = clc.CA_TY_M7
-            .CA_TY_M8 = clc.CA_TY_M8
-            .CA_TY_M9 = clc.CA_TY_M9
-            .CA_TY_M10 = clc.CA_TY_M10
-            .CA_TY_M11 = clc.CA_TY_M11
-            .CA_TY_M12 = clc.CA_TY_M12
-
-            .CA_PY_M1 = clc.CA_PY_M1
-            .CA_PY_M2 = clc.CA_PY_M2
-            .CA_PY_M3 = clc.CA_PY_M3
-            .CA_PY_M4 = clc.CA_PY_M4
-            .CA_PY_M5 = clc.CA_PY_M5
-            .CA_PY_M6 = clc.CA_PY_M6
-            .CA_PY_M7 = clc.CA_PY_M7
-            .CA_PY_M8 = clc.CA_PY_M8
-            .CA_PY_M9 = clc.CA_PY_M9
-            .CA_PY_M10 = clc.CA_PY_M10
-            .CA_PY_M11 = clc.CA_PY_M11
-            .CA_PY_M12 = clc.CA_PY_M12
-
-            .CA_TY_YTD1 = clc.CA_TY_YTD1
-            .CA_TY_YTD2 = clc.CA_TY_YTD2
-            .CA_TY_YTD3 = clc.CA_TY_YTD3
-            .CA_TY_YTD4 = clc.CA_TY_YTD4
-            .CA_TY_YTD5 = clc.CA_TY_YTD5
-            .CA_TY_YTD6 = clc.CA_TY_YTD6
-            .CA_TY_YTD7 = clc.CA_TY_YTD7
-            .CA_TY_YTD8 = clc.CA_TY_YTD8
-            .CA_TY_YTD9 = clc.CA_TY_YTD9
-            .CA_TY_YTD10 = clc.CA_TY_YTD10
-            .CA_TY_YTD11 = clc.CA_TY_YTD11
-            .CA_TY_YTD12 = clc.CA_TY_YTD12
-
-            .CA_PY_YTD1 = clc.CA_PY_YTD1
-            .CA_PY_YTD2 = clc.CA_PY_YTD2
-            .CA_PY_YTD3 = clc.CA_PY_YTD3
-            .CA_PY_YTD4 = clc.CA_PY_YTD4
-            .CA_PY_YTD5 = clc.CA_PY_YTD5
-            .CA_PY_YTD6 = clc.CA_PY_YTD6
-            .CA_PY_YTD7 = clc.CA_PY_YTD7
-            .CA_PY_YTD8 = clc.CA_PY_YTD8
-            .CA_PY_YTD9 = clc.CA_PY_YTD9
-            .CA_PY_YTD10 = clc.CA_PY_YTD10
-            .CA_PY_YTD11 = clc.CA_PY_YTD11
-            .CA_PY_YTD12 = clc.CA_PY_YTD12
-
-            .CA_TY_Q1 = clc.CA_TY_Q1
-            .CA_TY_Q2 = clc.CA_TY_Q2
-            .CA_TY_Q3 = clc.CA_TY_Q3
-            .CA_TY_Q4 = clc.CA_TY_Q4
-
-            .CA_PY_Q1 = clc.CA_PY_Q1
-            .CA_PY_Q2 = clc.CA_PY_Q2
-            .CA_PY_Q3 = clc.CA_PY_Q3
-            .CA_PY_Q4 = clc.CA_PY_Q4
 
         End With
         
