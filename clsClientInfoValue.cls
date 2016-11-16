@@ -67,3 +67,20 @@ Public vHairdressersWorkPlace As Integer
 Public vPartnerName As String
 Public vPartnerCode As Variant
 
+Public CA_TY As Collection
+Public CA_PY As Collection
+
+Private Sub Class_Initialize()
+   Set CA_TY = New Collection
+   Set CA_PY = New Collection
+End Sub
+
+Public Function getYTD(col As Collection, month As Integer) As Long
+   Dim i As Integer
+   Dim result As Long
+   result = 0
+   For i = 1 To month
+       result = result + col.Item(i)
+   Next i
+   getYTD = result
+End Function
