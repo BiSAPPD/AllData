@@ -26,7 +26,7 @@ Public vClientAddres As String
 Public vClientName As String
 Public vChainName As String
 Public vChainNameTop As String
-Public vChainCode As Double
+Public vChainCode As Variant
 Public vGeoCity As String
 Public vGeoReg As String
 Public vClientType As String
@@ -34,7 +34,7 @@ Public vClientTypeRus As String
 Public vClientTypeEng As String
 Public vClientTypeEngChort As String
 Public vClientTypeEngChain As String
-Public vClientTypeGA as String
+Public vClientTypeGA As String
 Public vClubStatus As String
 Public vEmotionStatus As String
 Public vCnqFullDate As Date
