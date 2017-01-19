@@ -83,7 +83,7 @@ Public Sub FillFromSheet(ByRef wks As Worksheet, ByVal cStatYear As Integer, ByV
             .ClientName = myLib.GetClientName(.Client, .ClientAddres, .GeoCity)
             .ChainName = wks.Cells(f_i, 19)
             .ChainCode = myLib.GetNum2numNull(Cells(f_i, 20))
-            .ChainNameTop = IIf(Left(.ChainCode, 2) = "93", .ChainName, Empty)
+            .ChainNameTop = IIf(Left(.ChainCode, 2) = "92", .ChainName, Empty)
             .GeoReg = wks.Cells(f_i, 13)
             .ClientType = wks.Cells(f_i, 18)
             .ClientTypeRus = myLib.GetClntType(.ClientType, 1)
